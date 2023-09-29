@@ -32,6 +32,8 @@ The GreenGlimpse tool covers the entire gamut of company operations:
 
 ## Technologies Used
 
+- **Front-End**: Next.js, React, TypeScript, Tailwind CSS
+- **Back-End**: Node.js, ....?
 - **IoT**: For on-ground, real-time data collection.
 - **5G**: Ensuring that data from IoT devices is transmitted quickly and seamlessly.
 - **AI**: Analyzing the vast data sets to provide actionable insights and suggestions for emission reduction.
