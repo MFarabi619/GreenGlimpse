@@ -7,13 +7,7 @@ import {
   TableCell,
   Text
 } from '@tremor/react';
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
+import { User } from '@/lib/planetscale';
 
 export default function UsersTable({ users }: { users: User[] }) {
   return (
