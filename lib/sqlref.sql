@@ -1,6 +1,7 @@
-CREATE TABLE YTDEmissions (
-                              id INT PRIMARY KEY,
-                              CompanyID INT NOT NULL,
+CREATE TABLE ytdEmissions (
+                              id VARCHAR(255) NOT NULL PRIMARY KEY,
+                              CompanyID VARCHAR(255) NOT NULL,
+                              Name VARCHAR(255) NOT NULL,
                               Year INT NOT NULL,
                               Scope INT NOT NULL,
                               Category ENUM('Transportation', 'Electricity', 'Manufacturing', 'Storage', 'Waste', 'Other') NOT NULL,

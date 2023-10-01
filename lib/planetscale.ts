@@ -21,8 +21,9 @@ export async function findUsersPartialMatch(name:string): Promise<User[]>{
 
 
 interface YTDEmissions {
-    id: Generated<number>;
+    id: string;
     CompanyID: number; // FK
+    Name: string;
     Year: number;
     Scope: number;
     Category: "Transportation" | "Electricity" | "Manufacturing" | "Storage" | "Waste" | "Other";
@@ -57,6 +58,9 @@ export async function findMatchingEmissions(criteria: Partial<SelectYTDEmissions
     }
     if(criteria.Category) {
         query = query.where('Category','=', criteria.Category)
+    }
+    if(criteria.Name){
+        query = query.where('Name', 'like', `%${criteria.Name}%`)
     }
     return await query.selectAll().execute();
 

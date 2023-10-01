@@ -1,10 +1,10 @@
 import {DB, insertYtdEmmissions, NewYTDEmissions} from "@/lib/planetscale";
 import {NextRequest, NextResponse} from "next/server";
-
+import {randomUUID} from "crypto";
 
 export async function GET(req: NextRequest){
     //Populate test data
-    const data = await req.json();
+    // const data = await req.json();
 
     const categories = ["Transportation", "Electricity", "Manufacturing", "Storage", "Waste", "Other"];
 
@@ -22,7 +22,9 @@ export async function GET(req: NextRequest){
         const total = co2e + ch4 + n2o + hfc;
         const last_updated = new Date().toISOString().slice(0, 19).replace('T', ' ');
         const emissions: NewYTDEmissions = {
+            id: randomUUID(),
             CompanyID: company_id,
+            Name: "Test Company",
             Year: year,
             Scope: scope,
             Category: category,
