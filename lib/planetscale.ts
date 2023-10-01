@@ -2,12 +2,23 @@ import 'server-only';
 import {Generated, Insertable, Kysely, Selectable} from 'kysely';
 import { PlanetScaleDialect } from 'kysely-planetscale';
 
-interface User {
-  id: Generated<number>;
+export interface User {
+  id: number;
   name: string;
   username: string;
   email: string;
 }
+
+export async function findUsersPartialMatch(name:string): Promise<User[]>{
+    const users = await DB
+        .selectFrom('users')
+        .select(['id', 'name', 'username', 'email'])
+        .where('name', 'like', `%${name}%`)
+        .execute();
+    return users;
+}
+
+
 
 interface YTDEmissions {
     id: Generated<number>;
