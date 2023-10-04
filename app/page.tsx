@@ -17,71 +17,26 @@ const operationsPercent = 10;
 const usagePercent = 10;
 const wastePercent = 10;
 
-const rawMaterialExtraction = [
-  {
-    name: 'Emission source',
-    emissions: 100 - rawMaterialExtractionPercent
-  },
-  {
-    name: 'Renewable source',
-    emissions: rawMaterialExtractionPercent
-  }
-];
+function generateData(emissionPercent: number) {
+    return [
+        {
+            name: 'Emission source',
+            emissions: 100 - emissionPercent
+        },
+        {
+            name: 'Renewable source',
+            emissions: emissionPercent
+        }
+    ];
+}
 
-const manufacturing = [
-  {
-    name: 'Emission source',
-    emissions: 100 - manufacturingPercent
-  },
-  {
-    name: 'Renewable source',
-    emissions: manufacturingPercent
-  }
-];
+const rawMaterialExtraction = generateData(rawMaterialExtractionPercent);
+const manufacturing = generateData(manufacturingPercent);
+const transportation = generateData(transportationPercent);
+const operations = generateData(operationsPercent);
+const usage = generateData(usagePercent);
+const waste = generateData(wastePercent);
 
-const transportation = [
-  {
-    name: 'Emission source',
-    emissions: 100 - transportationPercent
-  },
-  {
-    name: 'Renewable source',
-    emissions: transportationPercent
-  }
-];
-
-const operations = [
-  {
-    name: 'Emission source',
-    emissions: 100 - operationsPercent
-  },
-  {
-    name: 'Renewable source',
-    emissions: operationsPercent
-  }
-];
-
-const usage = [
-  {
-    name: 'Emission source',
-    emissions: 100 - usagePercent
-  },
-  {
-    name: 'Renewable source',
-    emissions: usagePercent
-  }
-];
-
-const waste = [
-  {
-    name: 'Emission source',
-    emissions: 100 - wastePercent
-  },
-  {
-    name: 'Renewable source',
-    emissions: wastePercent
-  }
-];
 
 type MonthData = {
   "month": string;
@@ -110,11 +65,9 @@ function generate_month_data(month_name: string, base_value: number): MonthData 
     }
 }
 
-
 const months: string[] = ["April", "May", "June", "July", "August", "September", "October"]
 
 const chartdata: MonthData[] = months.map((month, i) => generate_month_data(month, 50 + i));
-
 
 export default async function IndexPage() {
   return (
