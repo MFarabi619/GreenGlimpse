@@ -79,6 +79,15 @@ function generate_month_data(month: string): MonthData {
 const months: string[] = ["April", "May", "June", "July", "August", "September", "October"];
 const chartdata: MonthData[] = months.map(month => generate_month_data(month));
 
+// Function to determine the color based on the percentage
+function getColorByPercentage(percentage: number): 'green' | 'yellow' | 'orange' | 'red' {
+    if (percentage <= 25) return 'green';
+    if (percentage <= 50) return 'yellow';
+    if (percentage <= 75) return 'orange';
+    return 'red';
+}
+
+
 // Main rendering function
 export default async function IndexPage() {
   return (
@@ -93,7 +102,7 @@ export default async function IndexPage() {
               data={categoryData[category as CategoryName]}
               category="emissions"
               index="name"
-              colors={['slate', 'green']}
+              colors={['slate', getColorByPercentage(categoryData[category as CategoryName][1].emissions)]}
               label={`${categoryData[category as CategoryName][1].emissions}%`}
             />
           </Card>
