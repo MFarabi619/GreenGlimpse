@@ -11,8 +11,11 @@ import {
 export const dynamic = 'force-dynamic';
 
 const rawMaterialExtractionPercent = 80;
-const transportationPercent = 50;
-const wastePercent = 60;
+const manufacturingPercent = 40;
+const transportationPercent = 10;
+const operationsPercent = 10;
+const usagePercent = 10;
+const wastePercent = 10;
 
 const rawMaterialExtraction = [
   {
@@ -22,6 +25,17 @@ const rawMaterialExtraction = [
   {
     name: 'Renewable source',
     emissions: rawMaterialExtractionPercent
+  }
+];
+
+const manufacturing = [
+  {
+    name: 'Emission source',
+    emissions: 100 - manufacturingPercent
+  },
+  {
+    name: 'Renewable source',
+    emissions: manufacturingPercent
   }
 ];
 
@@ -36,6 +50,28 @@ const transportation = [
   }
 ];
 
+const operations = [
+  {
+    name: 'Emission source',
+    emissions: 100 - operationsPercent
+  },
+  {
+    name: 'Renewable source',
+    emissions: operationsPercent
+  }
+];
+
+const usage = [
+  {
+    name: 'Emission source',
+    emissions: 100 - usagePercent
+  },
+  {
+    name: 'Renewable source',
+    emissions: usagePercent
+  }
+];
+
 const waste = [
   {
     name: 'Emission source',
@@ -47,38 +83,38 @@ const waste = [
   }
 ];
 
-const chartdata = [
-  {
-    month: 'May',
-    "Raw Material Extraction": 50,
-    Transportation: 64,
-    Waste: 70
-  },
-  {
-    month: 'June',
-    "Raw Material Extraction": 60,
-    Transportation: 53,
-    Waste: 65
-  },
-  {
-    month: 'July',
-    "Raw Material Extraction": 75,
-    Transportation: 56,
-    Waste: 58
-  },
-  {
-    month: 'August',
-    "Raw Material Extraction": 70,
-    Transportation: 48,
-    Waste: 55
-  },
-  {
-    month: 'September',
-    "Raw Material Extraction": 60,
-    Transportation: 45,
-    Waste: 50
-  }
-];
+type MonthData = {
+  "month": string;
+  "Raw Material Extraction": number;
+  "Manufacturing": number;
+  "Transportation": number;
+  "Operations": number;
+  "Usage": number;
+  "Waste": number;
+}
+
+function randomize(base: number): number {
+    return base + Math.floor(Math.random() * 10); // randomize within a range of 10 units
+}
+
+// Function to randomly generate data for a month
+function generate_month_data(month_name: string, base_value: number): MonthData {
+    return {
+        "month": month_name,
+        "Raw Material Extraction": randomize(base_value),
+        "Manufacturing": randomize(base_value + 2),
+        "Transportation": randomize(base_value + 14),
+        "Operations": randomize(base_value - (base_value % 10)),
+        "Usage": randomize(base_value - (base_value % 10) + 5),
+        "Waste": randomize(base_value + 10)
+    }
+}
+
+
+const months: string[] = ["April", "May", "June", "July", "August", "September", "October"]
+
+const chartdata: MonthData[] = months.map((month, i) => generate_month_data(month, 50 + i));
+
 
 export default async function IndexPage() {
   return (
@@ -97,6 +133,18 @@ export default async function IndexPage() {
         </Card>
 
         <Card className="max-w-sm flex flex-col items-center">
+          <Title>Manufacturing</Title>
+          <DonutChart
+            className="mt-6"
+            data={manufacturing}
+            category="emissions"
+            index="name"
+            colors={['slate', 'green']}
+            label={manufacturing[1].emissions.toString() + '%'}
+          />
+        </Card>
+
+        <Card className="max-w-sm flex flex-col items-center">
           <Title>Transportation:</Title>
           <DonutChart
             className="mt-6"
@@ -105,6 +153,30 @@ export default async function IndexPage() {
             index="name"
             colors={['slate', 'green']}
             label={transportation[1].emissions.toString() + '%'}
+          />
+        </Card>
+
+        <Card className="max-w-sm flex flex-col items-center">
+          <Title>Operations</Title>
+          <DonutChart
+            className="mt-6"
+            data={operations}
+            category="emissions"
+            index="name"
+            colors={['slate', 'green']}
+            label={operations[1].emissions.toString() + '%'}
+          />
+        </Card>
+
+        <Card className="max-w-sm flex flex-col items-center">
+          <Title>Usage</Title>
+          <DonutChart
+            className="mt-6"
+            data={usage}
+            category="emissions"
+            index="name"
+            colors={['slate', 'green']}
+            label={usage[1].emissions.toString() + '%'}
           />
         </Card>
 
@@ -119,11 +191,13 @@ export default async function IndexPage() {
             label={waste[1].emissions.toString() + '%'}
           />
         </Card>
+
+
       </div>
       <Card className="w-full mx-auto mt-5">
         <Title className="text-center">Green Glimpse Percentage (GGP)</Title>
         <Flex>
-          <Text>45%</Text>
+          <Text>0%</Text>
           <Text>100%</Text>
         </Flex>
         <ProgressBar value={58} color="teal" className="mt-3" />
@@ -134,13 +208,14 @@ export default async function IndexPage() {
           className="mt-5"
           data={chartdata}
           index="month"
-          categories={['Raw Material Extraction', 'Transportation', 'Waste']}
-          colors={['emerald', 'yellow', 'red']}
+  categories={['Raw Material Extraction', 'Manufacturing', 'Transportation', 'Operations', 'Usage', 'Waste']}
+  colors={['emerald', 'blue', 'yellow', 'purple', 'orange', 'red']}
           yAxisWidth={40}
           minValue={40}
           maxValue={80}
         />
       </Card>
+      
     </main>
   );
 }
