@@ -23,17 +23,17 @@ export default function Search({ disabled }: { disabled?: boolean }) {
   }
 
   return (
-    <div className="relative mt-5 max-w-md">
+    <div className="relative mt-5 max-w-md ">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
-      <div className="rounded-md shadow-sm">
+      <div className="rounded-md shadow-sm bg-slate-800">
         <div
           className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
           aria-hidden="true"
         >
           <MagnifyingGlassIcon
-            className="mr-3 h-4 w-4 text-gray-400"
+            className="mr-3 h-4 w-4 text-slate-400"
             aria-hidden="true"
           />
         </div>
@@ -42,7 +42,7 @@ export default function Search({ disabled }: { disabled?: boolean }) {
           name="search"
           id="search"
           disabled={disabled}
-          className="h-10 block w-full rounded-md border border-gray-200 pl-9 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="bg-slate-800 h-10 block w-full rounded-md border border-gray-200 pl-9 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           placeholder="Search by name..."
           spellCheck={false}
           onChange={(e) => handleSearch(e.target.value)}
@@ -52,7 +52,7 @@ export default function Search({ disabled }: { disabled?: boolean }) {
       {isPending && (
         <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
           <svg
-            className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-700"
+            className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-400"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
