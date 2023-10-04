@@ -7,9 +7,9 @@ import { Suspense } from 'react';
 import { Providers } from '@/app/components/providers';
 
 export const metadata = {
-  title: 'Next.js 13 + PlanetScale + NextAuth + Tailwind CSS',
+  title: 'Green Glimpse - Dashboard',
   description:
-    'A user admin dashboard configured with Next.js, PlanetScale, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.'
+    'Greater Vision for a Greener Tomorrow'
 };
 
 export default async function RootLayout({
