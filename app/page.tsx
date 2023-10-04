@@ -10,18 +10,18 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-const powerPercent = 80;
+const rawMaterialExtractionPercent = 80;
 const transportationPercent = 50;
 const wastePercent = 60;
 
-const power = [
+const rawMaterialExtraction = [
   {
     name: 'Emission source',
-    emissions: 100 - powerPercent
+    emissions: 100 - rawMaterialExtractionPercent
   },
   {
     name: 'Renewable source',
-    emissions: powerPercent
+    emissions: rawMaterialExtractionPercent
   }
 ];
 
@@ -50,31 +50,31 @@ const waste = [
 const chartdata = [
   {
     month: 'May',
-    Power: 50,
+    "Raw Material Extraction": 50,
     Transportation: 64,
     Waste: 70
   },
   {
     month: 'June',
-    Power: 60,
+    "Raw Material Extraction": 60,
     Transportation: 53,
     Waste: 65
   },
   {
     month: 'July',
-    Power: 75,
+    "Raw Material Extraction": 75,
     Transportation: 56,
     Waste: 58
   },
   {
     month: 'August',
-    Power: 70,
+    "Raw Material Extraction": 70,
     Transportation: 48,
     Waste: 55
   },
   {
     month: 'September',
-    Power: 60,
+    "Raw Material Extraction": 60,
     Transportation: 45,
     Waste: 50
   }
@@ -85,14 +85,14 @@ export default async function IndexPage() {
     <main className="p-4 md:p-10 mx-auto max-w-7xl flex flex-col items-center">
       <div className="flex justify-between flex-wrap w-full">
         <Card className="max-w-sm flex flex-col items-center">
-          <Title>Power:</Title>
+          <Title>Raw Material Extraction</Title>
           <DonutChart
             className="mt-6"
-            data={power}
+            data={rawMaterialExtraction}
             category="emissions"
             index="name"
             colors={['slate', 'green']}
-            label={power[1].emissions.toString() + '%'}
+            label={rawMaterialExtraction[1].emissions.toString() + '%'}
           />
         </Card>
 
@@ -134,7 +134,7 @@ export default async function IndexPage() {
           className="mt-5"
           data={chartdata}
           index="month"
-          categories={['Power', 'Transportation', 'Waste']}
+          categories={['Raw Material Extraction', 'Transportation', 'Waste']}
           colors={['emerald', 'yellow', 'red']}
           yAxisWidth={40}
           minValue={40}
