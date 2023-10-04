@@ -81,10 +81,10 @@ const chartdata: MonthData[] = months.map(month => generate_month_data(month));
 
 // Function to determine the color based on the percentage
 function getColorByPercentage(percentage: number): 'green' | 'yellow' | 'orange' | 'red' {
-    if (percentage <= 25) return 'green';
-    if (percentage <= 50) return 'yellow';
-    if (percentage <= 75) return 'orange';
-    return 'red';
+    if (percentage <= 10) return 'green';
+    else if (percentage <= 15) return 'yellow';
+    else if (percentage <= 20) return 'orange';
+    else return 'red';
 }
 
 
