@@ -10,13 +10,21 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-const rawMaterialExtractionPercent = 80;
-const manufacturingPercent = 40;
-const transportationPercent = 10;
-const operationsPercent = 10;
-const usagePercent = 10;
-const wastePercent = 10;
+// Generate random percentages that add up to the given total.
+function generateRandomPercentages(num: number, total: number): number[] {
+    let percentages: number[] = [];
+    for(let i = 0; i < num; i++) {
+        percentages.push(Math.random());
+    }
+    
+    const sum = percentages.reduce((a, b) => a + b, 0);
+    return percentages.map(value => Math.floor((value / sum) * total));
+}
 
+// Generate initial percentages for each category
+const [rawMaterialExtractionPercent, manufacturingPercent, transportationPercent, operationsPercent, usagePercent, wastePercent] = generateRandomPercentages(6, 100);
+
+// Create emission data based on a given percentage
 function generateData(emissionPercent: number) {
     return [
         {
@@ -30,123 +38,69 @@ function generateData(emissionPercent: number) {
     ];
 }
 
-const rawMaterialExtraction = generateData(rawMaterialExtractionPercent);
-const manufacturing = generateData(manufacturingPercent);
-const transportation = generateData(transportationPercent);
-const operations = generateData(operationsPercent);
-const usage = generateData(usagePercent);
-const waste = generateData(wastePercent);
+type CategoryName = "Raw Material Extraction" | "Manufacturing" | "Transportation" | "Operations" | "Usage" | "Waste";
 
+type EmissionData = {
+    name: string;
+    emissions: number;
+}[];
 
+// Define types for monthly data 
 type MonthData = {
-  "month": string;
-  "Raw Material Extraction": number;
-  "Manufacturing": number;
-  "Transportation": number;
-  "Operations": number;
-  "Usage": number;
-  "Waste": number;
+    month: string;
+} & {
+    [key in CategoryName]?: number;
 }
 
+// Generate the emission data for each category
+const categoryData: Record<CategoryName, EmissionData> = {
+  "Raw Material Extraction": generateData(rawMaterialExtractionPercent),
+  "Manufacturing": generateData(manufacturingPercent),
+  "Transportation": generateData(transportationPercent),
+  "Operations": generateData(operationsPercent),
+  "Usage": generateData(usagePercent),
+  "Waste": generateData(wastePercent)
+};
+
+// Randomly adjust a given value within a range of 10 units.
 function randomize(base: number): number {
-    return base + Math.floor(Math.random() * 10); // randomize within a range of 10 units
+    return base + Math.floor(Math.random() * 10);
 }
 
 // Function to randomly generate data for a month
-function generate_month_data(month_name: string, base_value: number): MonthData {
-    return {
-        "month": month_name,
-        "Raw Material Extraction": randomize(base_value),
-        "Manufacturing": randomize(base_value + 2),
-        "Transportation": randomize(base_value + 14),
-        "Operations": randomize(base_value - (base_value % 10)),
-        "Usage": randomize(base_value - (base_value % 10) + 5),
-        "Waste": randomize(base_value + 10)
+function generate_month_data(month: string): MonthData {
+    let monthData: MonthData = { month };
+    for (const category in categoryData) {
+        monthData[category as CategoryName] = randomize(categoryData[category as CategoryName][1].emissions);
     }
+    return monthData;
 }
 
-const months: string[] = ["April", "May", "June", "July", "August", "September", "October"]
+const months: string[] = ["April", "May", "June", "July", "August", "September", "October"];
+const chartdata: MonthData[] = months.map(month => generate_month_data(month));
 
-const chartdata: MonthData[] = months.map((month, i) => generate_month_data(month, 50 + i));
-
+// Main rendering function
 export default async function IndexPage() {
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl flex flex-col items-center">
+      {/* Render each category as a card */}
       <div className="flex justify-between flex-wrap w-full">
-        <Card className="max-w-sm flex flex-col items-center">
-          <Title>Raw Material Extraction</Title>
-          <DonutChart
-            className="mt-6"
-            data={rawMaterialExtraction}
-            category="emissions"
-            index="name"
-            colors={['slate', 'green']}
-            label={rawMaterialExtraction[1].emissions.toString() + '%'}
-          />
-        </Card>
-
-        <Card className="max-w-sm flex flex-col items-center">
-          <Title>Manufacturing</Title>
-          <DonutChart
-            className="mt-6"
-            data={manufacturing}
-            category="emissions"
-            index="name"
-            colors={['slate', 'green']}
-            label={manufacturing[1].emissions.toString() + '%'}
-          />
-        </Card>
-
-        <Card className="max-w-sm flex flex-col items-center">
-          <Title>Transportation:</Title>
-          <DonutChart
-            className="mt-6"
-            data={transportation}
-            category="emissions"
-            index="name"
-            colors={['slate', 'green']}
-            label={transportation[1].emissions.toString() + '%'}
-          />
-        </Card>
-
-        <Card className="max-w-sm flex flex-col items-center">
-          <Title>Operations</Title>
-          <DonutChart
-            className="mt-6"
-            data={operations}
-            category="emissions"
-            index="name"
-            colors={['slate', 'green']}
-            label={operations[1].emissions.toString() + '%'}
-          />
-        </Card>
-
-        <Card className="max-w-sm flex flex-col items-center">
-          <Title>Usage</Title>
-          <DonutChart
-            className="mt-6"
-            data={usage}
-            category="emissions"
-            index="name"
-            colors={['slate', 'green']}
-            label={usage[1].emissions.toString() + '%'}
-          />
-        </Card>
-
-        <Card className="max-w-sm flex flex-col items-center">
-          <Title>Waste:</Title>
-          <DonutChart
-            className="mt-6"
-            data={waste}
-            category="emissions"
-            index="name"
-            colors={['slate', 'green']}
-            label={waste[1].emissions.toString() + '%'}
-          />
-        </Card>
-
-
+        {Object.keys(categoryData).map(category => (
+          <Card className="max-w-sm flex flex-col items-center" key={category}>
+            <Title>{category}</Title>
+            <DonutChart
+              className="mt-6"
+              data={categoryData[category as CategoryName]}
+              category="emissions"
+              index="name"
+              colors={['slate', 'green']}
+              label={`${categoryData[category as CategoryName][1].emissions}%`}
+            />
+          </Card>
+        ))}
       </div>
+
+      {/* Render the GGP progress bar */}
       <Card className="w-full mx-auto mt-5">
         <Title className="text-center">Green Glimpse Percentage (GGP)</Title>
         <Flex>
@@ -155,14 +109,16 @@ export default async function IndexPage() {
         </Flex>
         <ProgressBar value={58} color="teal" className="mt-3" />
       </Card>
+
+      {/* Render the GGP chart for all categories */}
       <Card className="w-full mx-auto mt-5">
         <Title className="text-center text-3xl">GGP chart</Title>
         <LineChart
           className="mt-5"
           data={chartdata}
           index="month"
-  categories={['Raw Material Extraction', 'Manufacturing', 'Transportation', 'Operations', 'Usage', 'Waste']}
-  colors={['emerald', 'blue', 'yellow', 'purple', 'orange', 'red']}
+          categories={['Raw Material Extraction', 'Manufacturing', 'Transportation', 'Operations', 'Usage', 'Waste']}
+          colors={['emerald', 'blue', 'yellow', 'purple', 'orange', 'red']}
           yAxisWidth={40}
           minValue={40}
           maxValue={80}
