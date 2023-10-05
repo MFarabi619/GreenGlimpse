@@ -45,47 +45,35 @@ const App: FC<pageProps> = ({}) => {
   handleSubscribe();
 
   return (
-    <Card className={''}>
-      <div className={'grid gap-5 grid-flow-row justify-center p-8'}>
-        <h1 className={'text-2xl font-bold mb-4'}>
+    <Card className="bg-gray-900 text-white p-6 rounded-lg shadow-lg">
+      <div className="grid gap-5 grid-flow-row justify-center p-8">
+        <h1 className="text-2xl font-bold text-green-500 mb-4">
           Live Data Display - sub to: data/testIOT1
         </h1>
 
-        <div className={'mt-4 overflow-x-auto'}>
-          <table
-            className={
-              'min-w-full bg-white border border-gray-300 divide-y divide-gray-300'
-            }
-          >
-            <thead className={'bg-gray-50'}>
-              <tr>
-                <th
-                  className={
-                    'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                  }
-                >
-                  Key
-                </th>
-                <th
-                  className={
-                    'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                  }
-                >
-                  Value
-                </th>
-              </tr>
+        <div className="mt-4 overflow-x-auto">
+          <table className="min-w-full bg-gray-800 border border-gray-700 divide-y divide-gray-700">
+            <thead className="bg-gray-900">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-green-400 uppercase tracking-wider">
+                Key
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-green-400 uppercase tracking-wider">
+                Value
+              </th>
+            </tr>
             </thead>
-            <tbody className={'bg-white divide-y divide-gray-300'}>
-              {messages.map((message, index) => (
-                <tr key={index}>
-                  <td className={'px-6 py-4 whitespace-nowrap'}>
-                    {message.key}
-                  </td>
-                  <td className={'px-6 py-4 whitespace-nowrap'}>
-                    {message.value}
-                  </td>
-                </tr>
-              ))}
+            <tbody className="bg-gray-800 divide-y divide-gray-700">
+            {messages.map((message, index) => (
+              <tr key={index}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {message.key}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {message.value}
+                </td>
+              </tr>
+            ))}
             </tbody>
           </table>
         </div>

@@ -9,6 +9,7 @@ import {
   BadgeDelta,
   Button
 } from '@tremor/react';
+import AiSuggestions from '@/app/components/aiSuggestions';
 
 import LiveDataCard from './components/liveData';
 
@@ -215,6 +216,8 @@ export default async function IndexPage() {
       </div>
       {/* Render the GGP chart for all categories */}
       <LineChartDiagram />
+      <AiSuggestions />
+      <LiveDataCard />
     </main>
   );
 }
