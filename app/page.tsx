@@ -8,14 +8,19 @@ import {
   ProgressBar,
   Flex,
   LineChart,
-  BadgeDelta
+  BadgeDelta,
+  Button
 } from '@tremor/react';
+
 import LiveDataCard from './components/liveData';
+
+import LineChartDiagram from './components/LineChartDiagram';
+
 
 export const dynamic = 'force-dynamic';
 
 // Generate random percentages that add up to the given total.
-function generateRandomPercentages(num: number): number[] {
+function receivePercentages(num: number): number[] {
   let percentages: number[] = [];
   for (let i = 0; i < num; i++) {
     percentages.push(Math.ceil(Math.random() * 100));
@@ -32,7 +37,7 @@ const [
   operationsPercent,
   usagePercent,
   wastePercent
-] = generateRandomPercentages(6);
+] = receivePercentages(6);
 
 // Create emission data based on a given percentage
 function generateData(emissionPercent: number) {
@@ -95,6 +100,9 @@ function generate_month_data(month: string): MonthData {
 }
 
 const months: string[] = [
+  'January',
+  'Febuary',
+  'march',
   'April',
   'May',
   'June',
@@ -127,6 +135,8 @@ function getGGP(data: Record<CategoryName, EmissionData>): number {
   }
   return total / num;
 }
+
+//function for setting timeline for graph
 
 // Main rendering function
 export default async function IndexPage() {
@@ -187,6 +197,7 @@ export default async function IndexPage() {
         </Flex>
       </div>
 
+
       {/* Render the GGP chart for all categories */}
       <Card className="w-full mx-auto mt-5">
         <Title className="text-center text-3xl">GGP chart</Title>
@@ -209,6 +220,9 @@ export default async function IndexPage() {
         />
       </Card>
     <LiveDataCard />
+
+
+      <LineChartDiagram />
 
     </main>
   );
