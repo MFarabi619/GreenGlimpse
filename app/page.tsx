@@ -1,5 +1,3 @@
-
-
 import {
   Card,
   Title,
@@ -15,7 +13,6 @@ import {
 import LiveDataCard from './components/liveData';
 
 import LineChartDiagram from './components/LineChartDiagram';
-
 
 export const dynamic = 'force-dynamic';
 
@@ -140,7 +137,6 @@ function getGGP(data: Record<CategoryName, EmissionData>): number {
 
 // Main rendering function
 export default async function IndexPage() {
-
   return (
     <main className="px-4 md:px-10 mx-auto max-w-7xl flex flex-col items-center">
       {/* Render each category as a card */}
@@ -197,7 +193,6 @@ export default async function IndexPage() {
         </Flex>
       </div>
 
-
       {/* Render the GGP chart for all categories */}
       <Card className="w-full mx-auto mt-5">
         <Title className="text-center text-3xl">GGP chart</Title>
@@ -219,11 +214,9 @@ export default async function IndexPage() {
           maxValue={80}
         />
       </Card>
-    <LiveDataCard />
-
+      <LiveDataCard />
 
       <LineChartDiagram />
-
     </main>
   );
 }

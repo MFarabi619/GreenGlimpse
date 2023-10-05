@@ -1,7 +1,8 @@
 'use client';
 
 import { LineChart, Card, Flex, Button, Title } from '@tremor/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import io from 'socket.io-client';
 
 export default function LineChartDiagram() {
   //const [chartData, setChartData] = useState([]);
@@ -50,16 +51,52 @@ export default function LineChartDiagram() {
     return base + Math.floor(Math.random() * 10);
   }
 
+  const [messages, setMessages] = useState<any>([]);
+  const [socket, setSocket] = useState<any>(null);
+  const topic = 'data/testIOT1';
+  useMemo(() => {
+    const newSocket = io('http://localhost:3001');
+    setSocket(newSocket);
+
+    newSocket.on('message', (message: string) => {
+      try {
+        const parsedMessage = JSON.parse(message);
+        const messageKey = Object.keys(parsedMessage)[3];
+        const messageValue = parsedMessage[messageKey];
+        setMessages((prevMessages: any) =>
+          [{ key: messageKey, value: messageValue }, ...prevMessages].slice(
+            0,
+            50
+          )
+        );
+        console.log(messages);
+      } catch (e) {
+        console.error('Error parsing message: ', e);
+      }
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, ['']);
+
+  const handleSubscribe = () => {
+    if (socket) {
+      socket.emit('subscribe', 'data/testIOT1');
+    }
+  };
+  handleSubscribe();
+
   const chartdata: any = [];
   for (let i = 0; i < 10; i++) {
     chartdata.push({
       date: timeline[i],
-      'Raw Material Extraction': randomize(79),
-      Manufacturing: randomize(70),
-      Transportation: randomize(87),
-      Operations: randomize(53),
-      Usage: randomize(67),
-      Waste: randomize(35)
+      RawMaterialExtraction: messages[0].value[i],
+      Manufacturing: messages[1].value[i],
+      Transportation: messages[2].value[i],
+      Operations: messages[3].value[i],
+      Usage: messages[4].value[i],
+      Waste: messages[5].value[i]
     });
   }
 
@@ -92,8 +129,8 @@ export default function LineChartDiagram() {
         ]}
         colors={['emerald', 'blue', 'yellow', 'purple', 'orange', 'red']}
         yAxisWidth={40}
-        minValue={40}
-        maxValue={80}
+        minValue={30}
+        maxValue={70}
       />
     </Card>
   );
