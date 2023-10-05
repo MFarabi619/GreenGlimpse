@@ -214,9 +214,10 @@ export default async function IndexPage() {
           maxValue={80}
         />
       </Card>
-      <LiveDataCard />
+
 
       <LineChartDiagram />
+      <LiveDataCard />
     </main>
   );
 }

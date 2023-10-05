@@ -39,7 +39,7 @@ const App: FC<pageProps> = ({}) => {
 
   const handleSubscribe = () => {
     if (socket) {
-      socket.emit('subscribe', 'data/testIOT1');
+      socket.emit('subscribe', 'data/iot');
     }
   };
   handleSubscribe();

@@ -3,12 +3,22 @@
 import { LineChart, Card, Flex, Button, Title } from '@tremor/react';
 import { useEffect, useState, useMemo } from 'react';
 import io from 'socket.io-client';
+interface ChartData {
+  'Raw Material Extraction': number;
+  Manufacturing: number;
+  Transportation: number;
+  Operations: number;
+  Usage: number;
+  Waste: number;
+}
 
 export default function LineChartDiagram() {
   //const [chartData, setChartData] = useState([]);
   const [timeline, setTimeline] = useState<String[]>([]);
   const [data, setData] = useState<number[]>([]);
   const [currentDate, setCurrentDate] = useState<number[]>([]);
+
+
 
   useEffect(() => {
     getLastNTimeUnits(10, 'months');
@@ -53,7 +63,8 @@ export default function LineChartDiagram() {
 
   const [messages, setMessages] = useState<any>([]);
   const [socket, setSocket] = useState<any>(null);
-  const topic = 'data/testIOT1';
+  const topic = 'data/iot';
+  const [chartdata, setChartdata] = useState<ChartData[]>([]);
   useMemo(() => {
     const newSocket = io('http://localhost:3001');
     setSocket(newSocket);
@@ -69,6 +80,37 @@ export default function LineChartDiagram() {
             50
           )
         );
+        let RM = parsedMessage["RawMineral"]
+        const M:number[] = parsedMessage["Manufacturing"]
+        const T:number[] = parsedMessage["Transportation"]
+        const O:number[] = parsedMessage["Operations"]
+        const U:number[] = parsedMessage["Usage"]
+        const W:number[] = parsedMessage["Waste"]
+        const timeStamp = parsedMessage["timestamp"]
+        console.log(RM, M, T, O, U, W,timeStamp)
+
+        let newChartData= []
+
+        for (let i = 0; i < RM.length; i++) {
+          const rawMin : number = RM[i];
+
+          let d : ChartData = {
+            "Raw Material Extraction":RM[i],
+            "Manufacturing":M[i],
+            "Transportation":T[i],
+            "Operations":O[i],
+            "Usage":U[i],
+            "Waste":W[i],
+          }
+          newChartData.push(d)
+
+        }
+
+        setChartdata(newChartData)
+
+
+
+
         console.log(messages);
       } catch (e) {
         console.error('Error parsing message: ', e);
@@ -82,23 +124,12 @@ export default function LineChartDiagram() {
 
   const handleSubscribe = () => {
     if (socket) {
-      socket.emit('subscribe', 'data/testIOT1');
+      socket.emit('subscribe', 'data/iot');
     }
   };
   handleSubscribe();
 
-  const chartdata: any = [];
-  for (let i = 0; i < 10; i++) {
-    chartdata.push({
-      date: timeline[i],
-      RawMaterialExtraction: messages[0].value[i],
-      Manufacturing: messages[1].value[i],
-      Transportation: messages[2].value[i],
-      Operations: messages[3].value[i],
-      Usage: messages[4].value[i],
-      Waste: messages[5].value[i]
-    });
-  }
+
 
   return (
     <Card className="w-full mx-auto my-5">
