@@ -189,7 +189,7 @@ export default async function IndexPage() {
           </Card>
         </Flex>
       </div>
-      <LineChartDiagram chartData={chartdata} />
+      <LineChartDiagram />
     </main>
   );
 }

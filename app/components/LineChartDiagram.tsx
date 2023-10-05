@@ -3,14 +3,17 @@
 import { LineChart, Card, Flex, Button, Title } from '@tremor/react';
 import { useEffect, useState } from 'react';
 
-export default function LineChartDiagram(chartData: any) {
+export default function LineChartDiagram() {
+  //const [chartData, setChartData] = useState([]);
   const [timeline, setTimeline] = useState<String[]>([]);
+  const [data, setData] = useState<number[]>([]);
+  const [currentDate, setCurrentDate] = useState<number[]>([]);
 
   useEffect(() => {
-    setTimeline(getLastNTimeUnits(10, 'months'));
+    getLastNTimeUnits(10, 'months');
   }, []);
 
-  function getLastNTimeUnits(n: number, unit: string): string[] {
+  function getLastNTimeUnits(n: number, unit: string) {
     const currentDate = new Date();
     const result = [];
 
@@ -39,22 +42,46 @@ export default function LineChartDiagram(chartData: any) {
           break;
       }
     }
-    return result;
+    setTimeline(result);
   }
+
+  // Randomly adjust a given value within a range of 10 units.
+  function randomize(base: number): number {
+    return base + Math.floor(Math.random() * 10);
+  }
+
+  const chartdata: any = [];
+  for (let i = 0; i < 10; i++) {
+    chartdata.push({
+      date: timeline[i],
+      'Raw Material Extraction': randomize(79),
+      Manufacturing: randomize(70),
+      Transportation: randomize(87),
+      Operations: randomize(53),
+      Usage: randomize(67),
+      Waste: randomize(35)
+    });
+  }
+
   return (
     <Card className="w-full mx-auto my-5">
       <Flex>
         <Title className="text-3xl">GGP chart</Title>
         <div className="flex space-x-4">
-          <Button onClick={() => getLastNTimeUnits(10, 'year')}>Year</Button>
-          <Button>Month</Button>
-          <Button>Day</Button>
+          <Button onClick={() => getLastNTimeUnits(10, 'months')}>Month</Button>
+          <Button onClick={() => getLastNTimeUnits(10, 'days')}>Days</Button>
+          <Button onClick={() => getLastNTimeUnits(10, 'minutes')}>
+            Minutes
+          </Button>
+          <Button onClick={() => getLastNTimeUnits(10, 'seconds')}>
+            Seconds
+          </Button>
         </div>
       </Flex>
       <LineChart
         className="mt-5"
-        data={chartData}
-        index="month"
+        data={chartdata}
+        index="date"
         categories={[
           'Raw Material Extraction',
           'Manufacturing',
