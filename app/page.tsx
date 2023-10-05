@@ -1,3 +1,8 @@
+"use client"
+
+
+import io from 'socket.io-client';
+
 import {
   Card,
   Title,
@@ -8,6 +13,7 @@ import {
   LineChart,
   BadgeDelta
 } from '@tremor/react';
+import { useEffect, useState } from 'react';
 
 export const dynamic = 'force-dynamic';
 
@@ -127,6 +133,35 @@ function getGGP(data: Record<CategoryName, EmissionData>): number {
 
 // Main rendering function
 export default async function IndexPage() {
+  const [messages, setMessages] = useState<Array<{ key: string, value: string }>>([]);
+  const [socket, setSocket] = useState<any>(null);
+  const topic = "data/testIOT1";
+  useEffect(() => {
+    const newSocket = io('http://localhost:3001');
+    setSocket(newSocket);
+
+    newSocket.on('message', (message: string) => {
+      try {
+        const parsedMessage = JSON.parse(message);
+        const messageKey = Object.keys(parsedMessage)[0];
+        const messageValue = parsedMessage[messageKey];
+        setMessages(prevMessages => [{ key: messageKey, value: messageValue }, ...prevMessages].slice(0, 50));
+      } catch (e) {
+        console.error("Error parsing message: ", e);
+      }
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  const handleSubscribe = () => {
+    if (socket) {
+      socket.emit('subscribe', "data/testIOT1");
+    }
+  };
+  handleSubscribe();
   return (
     <main className="px-4 md:px-10 mx-auto max-w-7xl flex flex-col items-center">
       {/* Render each category as a card */}
@@ -204,6 +239,29 @@ export default async function IndexPage() {
           maxValue={80}
         />
       </Card>
+
+      <div className={"grid gap-5 grid-flow-row justify-center p-8"}>
+        <h1 className={"text-2xl font-bold mb-4"}>Live Data Display - sub to: data/testIOT1</h1>
+
+        <div className={"mt-4 overflow-x-auto"}>
+          <table className={"min-w-full bg-white border border-gray-300 divide-y divide-gray-300"}>
+            <thead className={"bg-gray-50"}>
+            <tr>
+              <th className={"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"}>Key</th>
+              <th className={"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"}>Value</th>
+            </tr>
+            </thead>
+            <tbody className={"bg-white divide-y divide-gray-300"}>
+            {messages.map((message, index) => (
+              <tr key={index}>
+                <td className={"px-6 py-4 whitespace-nowrap"}>{message.key}</td>
+                <td className={"px-6 py-4 whitespace-nowrap"}>{message.value}</td>
+              </tr>
+            ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
   );
 }
