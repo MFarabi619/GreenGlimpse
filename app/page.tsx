@@ -9,6 +9,7 @@ import {
   BadgeDelta,
   Button
 } from '@tremor/react';
+import AiSuggestions from '@/app/components/aiSuggestions';
 
 import LiveDataCard from './components/liveData';
 
@@ -217,6 +218,7 @@ export default async function IndexPage() {
 
 
       <LineChartDiagram />
+      <AiSuggestions/>
       <LiveDataCard />
     </main>
   );
