@@ -8,8 +8,7 @@ import { Providers } from '@/app/components/providers';
 
 export const metadata = {
   title: 'Green Glimpse - Dashboard',
-  description:
-    'Greater Vision for a Greener Tomorrow'
+  description: 'Greater Vision for a Greener Tomorrow'
 };
 
 export default async function RootLayout({
