@@ -18,8 +18,6 @@ export default function LineChartDiagram() {
   const [data, setData] = useState<number[]>([]);
   const [currentDate, setCurrentDate] = useState<number[]>([]);
 
-
-
   useEffect(() => {
     getLastNTimeUnits(10, 'months');
   }, []);
@@ -80,36 +78,32 @@ export default function LineChartDiagram() {
             50
           )
         );
-        let RM = parsedMessage["RawMineral"]
-        const M:number[] = parsedMessage["Manufacturing"]
-        const T:number[] = parsedMessage["Transportation"]
-        const O:number[] = parsedMessage["Operations"]
-        const U:number[] = parsedMessage["Usage"]
-        const W:number[] = parsedMessage["Waste"]
-        const timeStamp = parsedMessage["timestamp"]
-        console.log(RM, M, T, O, U, W,timeStamp)
+        let RM = parsedMessage['RawMineral'];
+        const M: number[] = parsedMessage['Manufacturing'];
+        const T: number[] = parsedMessage['Transportation'];
+        const O: number[] = parsedMessage['Operations'];
+        const U: number[] = parsedMessage['Usage'];
+        const W: number[] = parsedMessage['Waste'];
+        const timeStamp = parsedMessage['timestamp'];
+        console.log(RM, M, T, O, U, W, timeStamp);
 
-        let newChartData= []
+        let newChartData = [];
 
         for (let i = 0; i < RM.length; i++) {
-          const rawMin : number = RM[i];
+          const rawMin: number = RM[i];
 
-          let d : ChartData = {
-            "Raw Material Extraction":RM[i],
-            "Manufacturing":M[i],
-            "Transportation":T[i],
-            "Operations":O[i],
-            "Usage":U[i],
-            "Waste":W[i],
-          }
-          newChartData.push(d)
-
+          let d: ChartData = {
+            'Raw Material Extraction': RM[i],
+            Manufacturing: M[i],
+            Transportation: T[i],
+            Operations: O[i],
+            Usage: U[i],
+            Waste: W[i]
+          };
+          newChartData.push(d);
         }
 
-        setChartdata(newChartData)
-
-
-
+        setChartdata(newChartData);
 
         console.log(messages);
       } catch (e) {
@@ -128,8 +122,6 @@ export default function LineChartDiagram() {
     }
   };
   handleSubscribe();
-
-
 
   return (
     <Card className="w-full mx-auto my-5">

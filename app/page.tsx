@@ -13,6 +13,7 @@ import {
 import LiveDataCard from './components/liveData';
 
 import LineChartDiagram from './components/LineChartDiagram';
+import { DetailsButton } from './components/DetailsButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -133,37 +134,47 @@ function getGGP(data: Record<CategoryName, EmissionData>): number {
   return total / num;
 }
 
-//function for setting timeline for graph
+const nameData = [
+  'Mining,Machinerie,Workers',
+  'Factory,Assembly line,Workers',
+  'Truck,Rail,Plane,Ship',
+  'Temperature,Ligthing,Computers',
+  'Disposed,Product',
+  'Garbage,Paper,Plastic,Compost,Battery'
+];
 
 // Main rendering function
 export default async function IndexPage() {
   return (
     <main className="px-4 md:px-10 mx-auto max-w-7xl flex flex-col items-center">
-      {/* Render each category as a card */}
+      \{/* Render each category as a card */}
       <div className="flex sm:justify-around flex-wrap w-full lg:justify-between">
-        {Object.keys(categoryData).map((category) => (
+        {Object.keys(categoryData).map((category, k) => (
           <Card
-            className="mt-6 max-w-sm flex flex-col items-center"
+            className="mt-6 max-w-sm flex flex-col items-center hover:scale-110 transition-all"
             key={category}
           >
-            <Title>{category}</Title>
-            <DonutChart
-              className="mt-6"
-              data={categoryData[category as CategoryName]}
-              category="emissions"
-              index="name"
-              colors={[
-                'slate',
-                getColorByPercentage(
+            <DetailsButton data={nameData[k]}>
+              <Title>{category}</Title>
+              <DonutChart
+                className="mt-6"
+                data={categoryData[category as CategoryName]}
+                category="emissions"
+                index="name"
+                colors={[
+                  'slate',
+                  getColorByPercentage(
+                    categoryData[category as CategoryName][1].emissions
+                  )
+                ]}
+                label={`${
                   categoryData[category as CategoryName][1].emissions
-                )
-              ]}
-              label={`${categoryData[category as CategoryName][1].emissions}%`}
-            />
+                }%`}
+              />
+            </DetailsButton>
           </Card>
         ))}
       </div>
-
       {/* Render the GGP progress bar */}
       <div className="flex sm:justify-around flex-wrap w-full lg:justify-between">
         <Flex className="flex-wrap justify-center md:flex-nowrap">
@@ -184,40 +195,26 @@ export default async function IndexPage() {
           <Card className="md:max-w-sm mt-5 md:ml-4 h-28 flex items-center justify-between">
             <Title>LeaderBoard Ranking:</Title>
             <div className="flex items-center">
-              <Title className="text-4xl mr-2 text-green-400">#50</Title>
+              <Title className="text-[2rem] mr-3 text-green-400">
+                #{Math.floor(Math.random() * 20) + 1}
+              </Title>
               <Flex>
-                <BadgeDelta deltaType="increase">3</BadgeDelta>
+                <BadgeDelta
+                  deltaType={
+                    Math.floor(Math.random() * 2) + 1 > 1
+                      ? 'increase'
+                      : 'decrease'
+                  }
+                >
+                  {Math.floor(Math.random() * 3) + 1}
+                </BadgeDelta>
               </Flex>
             </div>
           </Card>
         </Flex>
       </div>
-
       {/* Render the GGP chart for all categories */}
-      <Card className="w-full mx-auto mt-5">
-        <Title className="text-center text-3xl">GGP chart</Title>
-        <LineChart
-          className="mt-5"
-          data={chartdata}
-          index="month"
-          categories={[
-            'Raw Material Extraction',
-            'Manufacturing',
-            'Transportation',
-            'Operations',
-            'Usage',
-            'Waste'
-          ]}
-          colors={['emerald', 'blue', 'yellow', 'purple', 'orange', 'red']}
-          yAxisWidth={40}
-          minValue={40}
-          maxValue={80}
-        />
-      </Card>
-
-
       <LineChartDiagram />
-      <LiveDataCard />
     </main>
   );
 }
