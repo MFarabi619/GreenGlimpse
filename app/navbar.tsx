@@ -11,7 +11,7 @@ import Logo from './img/logo.png';
 const navigation = [
   { name: 'Dashboard', href: '/' },
   { name: 'Leaderboard', href: '/leaderboard' },
-  { name: 'AI Suggestions', href: '/suggestions' }
+  { name: 'AI Suggestions', href: '/aisuggestions' }
 ];
 
 function classNames(...classes: string[]) {

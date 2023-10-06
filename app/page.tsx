@@ -136,12 +136,12 @@ function getGGP(data: Record<CategoryName, EmissionData>): number {
 }
 
 const nameData = [
-  'Mining,Machinerie,Workers',
-  'Factory,Assembly line,Workers',
-  'Truck,Rail,Plane,Ship',
-  'Temperature,Ligthing,Computers',
-  'Disposed,Product',
-  'Garbage,Paper,Plastic,Compost,Battery'
+  'Metals and Minerals,Petroleum,Rare Earth Elements,Silicon,Glass Raw Materials',
+  'Semiconductor Manufacturing,Hardware Assembly,Software Development,Packaging,Quality Control',
+  'Inbound Logistics,Outbound Logistics,Employee Commute,Cloud Data Transfer',
+  'Data Centers,Office Operations,Research & Development,Retail Stores',
+  'Device Energy Consumption,Software Efficiency,Cloud Services,Maintenance and Updates',
+  'E-waste,Packaging Waste,Obsolete Inventory,Data Waste'
 ];
 
 // Main rendering function
@@ -152,13 +152,13 @@ export default async function IndexPage() {
       <div className="flex sm:justify-around flex-wrap w-full lg:justify-between">
         {Object.keys(categoryData).map((category, k) => (
           <Card
-            className="mt-6 max-w-sm flex flex-col items-center hover:scale-110 transition-all"
+            className="mt-6 max-w-sm flex flex-col items-center hover:scale-110 transition-all cursor-pointer"
             key={category}
           >
             <DetailsButton data={nameData[k]}>
-              <Title>{category}</Title>
+              <Title className="cursor-pointer">{category}</Title>
               <DonutChart
-                className="mt-6"
+                className="mt-6 cursor-pointer"
                 data={categoryData[category as CategoryName]}
                 category="emissions"
                 index="name"
@@ -216,7 +216,6 @@ export default async function IndexPage() {
       </div>
       {/* Render the GGP chart for all categories */}
       <LineChartDiagram />
-      <AiSuggestions />
       <LiveDataCard />
     </main>
   );
