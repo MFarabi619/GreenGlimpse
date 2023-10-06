@@ -138,7 +138,7 @@ function getGGP(data: Record<CategoryName, EmissionData>): number {
 const nameData = [
   'Metals and Minerals,Petroleum,Rare Earth Elements,Silicon,Glass Raw Materials',
   'Semiconductor Manufacturing,Hardware Assembly,Software Development,Packaging,Quality Control',
-  'Inbound Logistics,Outbound Logistics,Employee Commute,Cloud Data Transfer',
+  'Inbound Logistics,Outbound Logistics,Employee Commute',
   'Data Centers,Office Operations,Research & Development,Retail Stores',
   'Device Energy Consumption,Software Efficiency,Cloud Services,Maintenance and Updates',
   'E-waste,Packaging Waste,Obsolete Inventory,Data Waste'

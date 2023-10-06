@@ -17,7 +17,7 @@ const App: FC<PageProps> = () => {
   const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('http://localhost:3002');
     setSocket(newSocket);
 
     newSocket.on('message', (message: string) => {
