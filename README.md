@@ -1,77 +1,71 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-  <img alt="Shows all of the tools in the stack for this template, also listed in the README file." src="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-</picture>
+# GreenGlimpse
+A comprehensive tool for analyzing and visualizing the complete emissions footprint across a company's operations chain, from raw material sourcing to product delivery. Utilizing AI, IoT, and 5G for real-time, transparent carbon tracking.
+# GreenGlimpse 🌲🔭
 
-<div align="center"><strong>Next.js 13 Admin Dashboard Template</strong></div>
-<div align="center">Built with the Next.js App Router</div>
-<br />
-<div align="center">
-<a href="http://admin-dash-template.vercel.sh/">Demo</a>
-<span> · </span>
-<a href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-planetscale-react-nextjs">Clone & Deploy</a>
-<span>
-</div>
+**GreenGlimpse** offers an in-depth view into a company's environmental impact, tracing the complete emissions lifecycle across various operational stages. From the raw material sourcing to the end-point product delivery, we aim to provide an unparalleled glimpse into where and how emissions are generated, powered by the latest in AI, IoT, and 5G technologies.
 
-## Overview
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Objective](#objective)
+- [Scope](#scope)
+- [Technologies Used](#technologies-used)
+- [Methodology](#methodology)
+- [Benefits](#benefits)
+- [Future Enhancements](#future-enhancements)
+- [Team](#team)
 
-This is a starter template using the following stack:
+## Project Overview
 
-- Framework - [Next.js 13](https://nextjs.org/13)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Auth - [NextAuth.js](https://next-auth.js.org)
-- Database - [PlanetScale](https://planetscale.com)
-- Deployment - [Vercel](https://vercel.com/docs/concepts/next.js/overview)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- Components - [Tremor](https://www.tremor.so)
-- Analytics - [Vercel Analytics](https://vercel.com/analytics)
-- Linting - [ESLint](https://eslint.org)
-- Formatting - [Prettier](https://prettier.io)
+As awareness about environmental issues increases, it's imperative for companies to understand, monitor, and reduce their carbon footprints. Traditional methods of assessing emissions often rely on estimates or coarse-grained models. GreenGlimpse changes that.
 
-This template uses the new Next.js App Router. This includes support for enhanced layouts, colocation of components, tests, and styles, component-level data fetching, and more.
+## Objective
 
-## Getting Started
+Our main goal is to provide real-time, granular insights into a company's emissions, from the grassroots level of raw material sourcing to the top-tier processes like product delivery and marketing.
 
-After creating an account with PlanetScale, you'll need to create a new database and retrieve the `DATABASE_URL`. Optionally, you can use Vercel integration, which will add the `DATABASE_URL` to the environment variables for your project.
+## Scope
 
-This is the provided `.env.local.example` file, which you'll want to use to create your own `.env.local` file:
+The GreenGlimpse tool covers the entire gamut of company operations:
 
-```
-# https://vercel.com/integrations/planetscale
-DATABASE_URL=
+- **Raw Material Sourcing**: Understanding the origins and emissions cost of raw materials.
+- **Manufacturing & Production**: Real-time tracking of emissions at the factory level.
+- **Employee Transportation**: Calculating the carbon footprint of daily commutes and business travels.
+- **Product Transportation**: From factory to retail and final consumer.
+- **Digital Operations**: Monitoring emissions from cloud storage, servers, and digital marketing campaigns.
 
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET= # Linux: `openssl rand -hex 32` or go to https://generate-secret.now.sh/32
+## Technologies Used
 
-# https://next-auth.js.org/providers/github
-GITHUB_ID=
-GITHUB_SECRET=
-```
+- **Front-End**: Next.js, React, TypeScript, Tailwind CSS, Tremor
+- **Back-End**: Node.js, NextAuth, ...?
+- **IoT**: For on-ground, real-time data collection.
+- **5G**: Ensuring that data from IoT devices is transmitted quickly and seamlessly.
+- **AI**: Analyzing the vast data sets to provide actionable insights and suggestions for emission reduction.
 
-Next, inside PlanetScale, create a users table based on the schema defined in this repository.
+## Methodology
 
-```
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `name` varchar(255),
-  `username` varchar(255),
-  PRIMARY KEY (`id`)
-);
-```
+Our approach involves:
 
-Insert a row for testing:
+1. **Integration with IoT Devices**: Placing IoT sensors at key points in the operations chain.
+2. **Data Collection**: Gathering vast amounts of data in real time.
+3. **AI-Powered Analysis**: The AI algorithms dissect this data to highlight emission hotspots and suggest reduction strategies.
+4. **Visual Dashboard**: Displaying the data in a user-friendly manner for companies and the public to see.
 
-```
-INSERT INTO `users` (`id`, `email`, `name`, `username`) VALUES (1, 'me@site.com', 'Me', 'username');
-```
+## Benefits
 
-Finally, run the following commands to start the development server:
+- **Transparency**: Showcase real and unfiltered emissions data.
+- **Strategic Decision Making**: Provide companies with the data needed to make informed decisions.
+- **Public Awareness**: Educate the general public about the environmental impacts of products they use.
 
-```
-pnpm install
-pnpm dev
-```
+## Future Enhancements
 
-You should now be able to access the application at http://localhost:3000.
+We envision expanding the capabilities of GreenGlimpse to cover more industries, integrate with other environmental datasets, and offer predictive analytics on future emission trends.
+
+## Team
+
+- **Sam Marchetti**: Front-End Developer
+- **Patrick Bonini**: Backend Developer & AI Specialist
+- **Connor Beleznay**: Backend Developer & IoT Expert
+- **Mumtahin Farabi**: Project Manager & UI/UX Developer
+
+---
+
+Developed with :heart: by the Segfault Surfers🏄
