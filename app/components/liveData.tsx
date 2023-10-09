@@ -11,9 +11,9 @@ const App: FC<pageProps> = ({}) => {
     Array<{ key: string; value: string }>
   >([]);
   const [socket, setSocket] = useState<any>(null);
-  const topic = 'data/testIOT1';
+  const topic = 'data/iot';
   useMemo(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('ec2-54-162-23-240.compute-1.amazonaws.com:80');
     setSocket(newSocket);
 
     newSocket.on('message', (message: string) => {
