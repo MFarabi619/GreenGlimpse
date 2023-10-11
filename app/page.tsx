@@ -125,10 +125,10 @@ const chartdata: MonthData[] = months.map((month) =>
 function getColorByPercentage(
   percentage: number
 ): 'green' | 'yellow' | 'orange' | 'red' {
-  if (percentage >= 75) return 'green';
-  else if (percentage >= 50) return 'yellow';
-  else if (percentage >= 25) return 'orange';
-  else return 'red';
+  if (percentage >= 60) return 'green';
+  else if (percentage >= 40) return 'orange';
+  else if (percentage >= 15) return 'yellow';
+  else return 'green';
 }
 
 // function to determine green glimpse percent
