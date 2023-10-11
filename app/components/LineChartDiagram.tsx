@@ -64,7 +64,7 @@ export default function LineChartDiagram() {
   const topic = 'data/iot';
   const [chartdata, setChartdata] = useState<ChartData[]>([]);
   useMemo(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('ec2-54-173-138-182.compute-1.amazonaws.com:80');
     setSocket(newSocket);
 
     newSocket.on('message', (message: string) => {
