@@ -17,7 +17,7 @@ const App: FC<PageProps> = () => {
   const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3002');
+    const newSocket = io('ec2-54-210-140-134.compute-1.amazonaws.com:80');
     setSocket(newSocket);
 
     newSocket.on('message', (message: string) => {
