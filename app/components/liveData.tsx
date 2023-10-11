@@ -13,7 +13,7 @@ const App: FC<pageProps> = ({}) => {
   const [socket, setSocket] = useState<any>(null);
   const topic = 'data/testIOT1';
   useMemo(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('ec2-54-173-138-182.compute-1.amazonaws.com:80');
     setSocket(newSocket);
 
     newSocket.on('message', (message: string) => {
