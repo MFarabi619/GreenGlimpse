@@ -21,9 +21,16 @@ export const dynamic = 'force-dynamic';
 // Generate random percentages that add up to the given total.
 function receivePercentages(num: number): number[] {
   let percentages: number[] = [];
-  for (let i = 0; i < num; i++) {
-    percentages.push(Math.ceil(Math.random() * 100));
+  let total = 100;
+
+  for (let i = 0; i < num - 1; i++) {
+    let thisPercent = Math.ceil(Math.random() * total);
+    percentages.push(thisPercent);
+    total -= thisPercent;
   }
+  
+  // Add the remaining total to ensure sum is 100
+  percentages.push(total);
 
   return percentages;
 }
